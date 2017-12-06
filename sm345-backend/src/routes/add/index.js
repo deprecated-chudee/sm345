@@ -3,9 +3,10 @@ const router = express.Router();
 
 const student = require('./student');
 const department = require('./department')
-// const
+const professor = require('./professor');
 
-router.use('/student', student)
-router.use('/department', department)
+router.use('/student', student);
+router.use('/department', department);
+router.use('/professor', professor);
 
 module.exports = router;

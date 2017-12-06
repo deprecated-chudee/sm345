@@ -10,8 +10,16 @@ const ProfessorSchema = new mongoose.Schema({
     number: Number,
     phone: String,
     tel: String,
-    department: [{ type:mongoose.Schema.Types.ObjectId, ref: 'Department' }],
+    department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department' },
     isManager: Boolean
 });
 
 const Professor = module.exports = mongoose.model('professor', ProfessorSchema);
+
+module.exports.addProfessor = async (newProfessor) => {
+    try {
+        return await newProfessor.save()
+    } catch(e) {
+        throw Error(e)
+    }
+}

@@ -7,12 +7,12 @@ const User = require('../../db/models/user');
 
 // Add Student
 router.post('/', async (req, res, next) => {
-    const { id, password, name, address, phone, major, minor, auth } = req.body
+    const { id, password, name, address, phone, major, minor } = req.body
     try {
         let newUser = await new User({
             username: id,
             password: password,
-            auth: 0 // default
+            auth: 0 // default Student
         })
 
         let user = await User.addUser(newUser)
