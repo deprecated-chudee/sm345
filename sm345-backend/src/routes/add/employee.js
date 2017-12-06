@@ -1,18 +1,18 @@
 const express = require('express')
 const router = express.Router()
 
-const Professor = require('../../db/models/professor');
+const Employee = require('../../db/models/employee');
 const Department = require('../../db/models/department');
 const User = require('../../db/models/user');
 
-// Add Professor
+// Add Employee
 router.post('/', async (req, res, next) => {
-    const { id, password, name, number, phone, tel, department } = req.body
+    const { id, password, name, phone, department } = req.body
     try {
         let newUser = await new User({
             username: id,
             password: password,
-            auth: 3 // default Professor
+            auth: 4 // default Employee
         })
 
         let user = await User.addUser(newUser)
@@ -27,31 +27,31 @@ router.post('/', async (req, res, next) => {
                 res.status(401).json({ success: false, msg: 'Failed to get department' })
             })
 
-        let newProfessor = await new Professor({
+        let newEmployee = await new Employee({
             user: user,
             name: name,
-            number: number,
             phone: phone,
-            tel: tel,
             department: getDepartment,
             isManager: false
         })
 
-        let professor = await Professor.addProfessor(newProfessor)
-            .then(professor => professor)
+        let employee = await Employee.addEmployee(newEmployee)
+            .then(employee => employee)
             .catch((err) => {
-                res.status(401).json({ success: false, msg: 'Failed to register professor' })
+                res.status(401).json({ success: false, msg: 'Failed to register employee' })
             })
 
-        await Department.insertProfessorByName(professor, getDepartment.name)
+        if(getDepartment) {
+            await Department.insertEmployeeByName(employee, getDepartment.name)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to insert department' })
             })
+        }
         
-        await res.status(200).json({ success: true, msg: 'Professor registered' })
+        await res.status(200).json({ success: true, msg: 'Student registered' })
     }
     catch(e) {
-        res.status(401).json({ success: false, msg: 'Failed to register professor' })
+        res.status(401).json({ success: false, msg: 'Failed to register student' })
     }
 })
 

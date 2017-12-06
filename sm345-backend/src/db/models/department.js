@@ -60,3 +60,12 @@ module.exports.insertProfessorByName = async (professor, name) => {
         throw Error(e)
     }
 }
+
+module.exports.insertEmployeeByName = async (employee, name) => {
+    try {
+        return Department.update({name: name}, {$push: {employees: employee}}, { upsert: true })
+    }
+    catch(e) {
+        throw Error(e)
+    }
+}

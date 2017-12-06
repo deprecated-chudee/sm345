@@ -8,9 +8,16 @@ const EmployeeSchema = new mongoose.Schema({
     id: String,
     name: String,
     phone: String,
-    check: Number,
-    department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department' },
+    department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: false },
     isManager: Boolean
 });
 
 const Employee = module.exports = mongoose.model('employee', EmployeeSchema);
+
+module.exports.addEmployee = async (newEmployee) => {
+    try {
+        return await newEmployee.save()
+    } catch(e) {
+        throw Error(e)
+    }
+}

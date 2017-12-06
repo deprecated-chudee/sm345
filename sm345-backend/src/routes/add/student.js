@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
                 res.status(401).json({ success: false, msg: 'Failed to get major' })
             })
 
-        let getMonor = await Department.getDepartmentByName(minor)
+        let getMinor = await Department.getDepartmentByName(minor)
             .then(department => department)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to get minor' })
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
             address: address,
             phone: phone,
             major: getMajor,
-            minor: getMonor,
+            minor: getMinor,
             isManager: false
         })
 
@@ -50,14 +50,16 @@ router.post('/', async (req, res, next) => {
                 res.status(401).json({ success: false, msg: 'Failed to register student' })
             })
 
-        await Department.insertStudentByName(student, major)
+        await Department.insertStudentByName(student, getMajor.name)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to insert major' })
             })
-        if(minor) await Department.insertStudentByName(student, minor)
+        if(getMinor) {
+            await Department.insertStudentByName(student, getMinor.name)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to insert minor' })
             })
+        }
         
         await res.status(200).json({ success: true, msg: 'Student registered' })
     }
