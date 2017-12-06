@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const User = require('./user');
 const Department = require('./department');
-// const Survey = require('survey');
+const Survey = require('./survey');
 
 const StudentSchema = new mongoose.Schema({
     user: { type:mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -13,7 +12,7 @@ const StudentSchema = new mongoose.Schema({
     phone: String,
     major: { type:mongoose.Schema.Types.ObjectId, ref: 'Department' },
     minor: { type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: false },
-    // surveys: Survey[],
+    surveys: [{ type:mongoose.Schema.Types.ObjectId, ref: 'Survey', required: false }],
     isManager: Boolean
 });
 

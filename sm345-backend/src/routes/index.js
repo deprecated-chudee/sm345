@@ -1,9 +1,10 @@
 const express = require('express');
-const add = require('./add');
-
 const router = express.Router();
 
-router.use('/add', add)
-// router.use('/', )
+const add = require('./add');
+const auth = require('./auth');
+
+router.use('/add', add);
+router.use('/auth', auth);
 
 module.exports = router;

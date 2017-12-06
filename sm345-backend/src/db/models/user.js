@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
     username: String,
-    password: String
+    password: String,
+    auth: Number
 });
 
 const User = module.exports = mongoose.model('user', UserSchema);
@@ -24,11 +25,29 @@ module.exports.addUser = async (newUser) => {
     }
 }
 
-module.exports.getUser = async (user) => {
+module.exports.getUserById = async (id, callback) => {
     try {
-        User.findOne({username: user.username})
+        return User.findById(id)
     }
     catch(e) {
+        throw Error(e)
+    }
+}
+
+module.exports.getUserByUsername = async (username) => {
+    try {
+        return User.findOne({username: username})
+    }
+    catch(e) {
+        throw Error(e)
+    }
+}
+
+module.exports.comparePassword = async (candidatePassword, hash) => {
+    try {
+        return bcrypt.compare(candidatePassword, hash)
+            .then((isMatch) => (null, isMatch))
+    } catch(e) {
         throw Error(e)
     }
 }

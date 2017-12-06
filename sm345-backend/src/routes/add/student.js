@@ -5,31 +5,30 @@ const Student = require('../../db/models/student');
 const Department = require('../../db/models/department');
 const User = require('../../db/models/user');
 
-// Add
+// Add Student
 router.post('/', async (req, res, next) => {
-    const { id, password, name, address, phone, major, minor } = req.body
+    const { id, password, name, address, phone, major, minor, auth } = req.body
     try {
         let newUser = await new User({
             username: id,
-            password: password
+            password: password,
+            auth: 0 // default
         })
 
         let user = await User.addUser(newUser)
-            .then((user) => {
-                return newUser
-            })
+            .then(user => newUser)
             .catch((err) => {
                 res.status(401).json({ success: false, msg: 'Failed to register user' })
             })
 
             
-        let getMajor = await Department.getDepartment(major)
+        let getMajor = await Department.getDepartmentByName(major)
             .then(department => department)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to get major' })
             })
 
-        let getMonor = await Department.getDepartment(minor)
+        let getMonor = await Department.getDepartmentByName(minor)
             .then(department => department)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to get minor' })
@@ -51,11 +50,11 @@ router.post('/', async (req, res, next) => {
                 res.status(401).json({ success: false, msg: 'Failed to register student' })
             })
 
-        await Department.insertStudent(student, major)
+        await Department.insertStudentByName(student, major)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to insert major' })
             })
-        if(minor) await Department.insertStudent(student, minor)
+        if(minor) await Department.insertStudentByName(student, minor)
             .catch((e) => { 
                 res.status(401).json({ success: false, msg: 'Failed to insert minor' })
             })
@@ -66,45 +65,5 @@ router.post('/', async (req, res, next) => {
         res.status(401).json({ success: false, msg: 'Failed to register student' })
     }
 })
-
-// Authenticate
-// router.post('/authenticate', (req, res, next) => {
-//     const { username, password } = req.body;
-
-//     User.getUserByUsername(username)
-//         .then((user) => {
-//             User.comparePassword(password, user.password)
-//                 .then((isMatch) => {
-//                     const token = jwt.sign(user.toJSON(), config.secret, {
-//                         expiresIn: 604800 // 1 week
-//                     })
-
-//                     res.status(200).json({
-//                         success: true,
-//                         token: 'JWT ' + token,
-//                         user: {
-//                             id: user._id,
-//                             name: user.name,
-//                             username: user.username,
-//                             email: user.email
-//                         }
-//                     })
-//                 })
-//                 .catch((err) => {
-//                     console.log(err)
-//                     res.status(400).json({ success: false, msg: 'Wrong password' })
-//                 })
-
-//             // res.status(200).json({ success: true, msg: 'User registered' })
-//         })
-//         .catch((err) => {
-//             res.status(400).json({ success: false, msg: 'User not found' })
-//         })
-// })
-
-// // Profile
-// router.get('/profile', (req, res, next) => {
-//     res.send('profile')
-// })
 
 module.exports = router

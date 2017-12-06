@@ -34,18 +34,18 @@ module.exports.addDepartment = async (newDepartment) => {
     }
 }
 
-module.exports.getDepartment = async (departmentName) => {
+module.exports.getDepartmentByName = async (name) => {
     try {
-        return Department.findOne({name: departmentName})
+        return Department.findOne({name: name})
     }
     catch(e) {
         throw Error(e)
     }
 }
 
-module.exports.insertStudent = async (student, departmentName) => {
+module.exports.insertStudentByName = async (student, name) => {
     try {
-        return Department.update({name: departmentName}, {$push: {students: student}}, { upsert: true })
+        return Department.update({name: name}, {$push: {students: student}}, { upsert: true })
     }
     catch(e) {
         throw Error(e)
