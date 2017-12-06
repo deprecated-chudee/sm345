@@ -1,0 +1,24 @@
+{
+  "name": "sm345-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "chudee",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.6",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  },
+  "stripts": {
+    "start:dev": "nodemon app.js"
+  }
+}
