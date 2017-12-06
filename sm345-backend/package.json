@@ -19,7 +19,7 @@
   "devDependencies": {
     "nodemon": "^1.12.5"
   },
-  "stripts": {
-    "start:dev": "nodemon app.js"
+  "scripts": {
+    "start:dev": "nodemon src/index"
   }
 }
