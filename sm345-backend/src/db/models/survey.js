@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
-const SurveySchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+const Survey = new Schema({
     name: String
 });
 
-const Survey = module.exports =  mongoose.model('survey', SurveySchema);
+module.exports =  mongoose.model('Survey', Survey);

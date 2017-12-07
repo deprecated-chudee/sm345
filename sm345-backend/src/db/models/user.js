@@ -1,46 +1,38 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const UserSchema = new mongoose.Schema({
+const { Schema } = mongoose;
+
+function hash(password) {
+    bcrypt.genSalt(10, function(err, salt) {
+        bcrypt.hash(password, salt, function(err, hash) {
+            return hash
+        })
+    })
+};
+
+const User = new Schema({
     username: String,
     password: String,
     auth: Number
 });
 
-const User = module.exports = mongoose.model('user', UserSchema);
+User.statics.addUser = function(username, password, auth) {
+    const user = new this({
+        username: username,
+        password: hash(password),
+        auth: auth
+    });
 
-module.exports.addUser = async (newUser) => {
-    try {
-        let hash = bcrypt.genSalt(10).then((salt) => {
-            return bcrypt.hash(newUser.password, salt)
-                .then((hash) => hash)
-            })
-        newUser.password = await hash
-
-        let saveUser = await newUser.save()
-        return saveUser
-    }
-    catch(e) {
-        throw Error(e)
-    }
+    return user.save();
 }
 
-module.exports.getUserById = async (id, callback) => {
-    try {
-        return User.findById(id)
-    }
-    catch(e) {
-        throw Error(e)
-    }
+User.methods.getUserById = function(id) {
+    return this.findById(id).exec();
 }
 
-module.exports.getUserByUsername = async (username) => {
-    try {
-        return User.findOne({username: username})
-    }
-    catch(e) {
-        throw Error(e)
-    }
+User.methods.getUserByUsername = function(username) {
+    return User.findOne({username: username}).exec();
 }
 
 module.exports.comparePassword = async (candidatePassword, hash) => {
@@ -51,3 +43,5 @@ module.exports.comparePassword = async (candidatePassword, hash) => {
         throw Error(e)
     }
 }
+
+module.exports = mongoose.model('User', User);

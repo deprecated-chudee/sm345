@@ -1,5 +1,4 @@
-const express = require('express')
-const router = express.Router()
+const router = require('express').Router();
 
 const Student = require('../../db/models/student');
 const Department = require('../../db/models/department');
@@ -7,65 +6,28 @@ const User = require('../../db/models/user');
 
 // Add Student
 router.post('/', async (req, res, next) => {
-    const { id, password, name, address, phone, major, minor } = req.body
     try {
-        let newUser = await new User({
-            username: id,
-            password: password,
-            auth: 0 // default Student
-        })
+        const { id, password, name, address, phone, major, minor } = req.body;
 
-        let user = await User.addUser(newUser)
-            .then(user => newUser)
-            .catch((err) => {
-                res.status(401).json({ success: false, msg: 'Failed to register user' })
-            })
-
+        const user = await User.addUser(id, password, 0);
             
-        let getMajor = await Department.getDepartmentByName(major)
-            .then(department => department)
-            .catch((e) => { 
-                res.status(401).json({ success: false, msg: 'Failed to get major' })
-            })
+        const getMajor = await Department.getDepartmentByName(major);
 
-        let getMinor = await Department.getDepartmentByName(minor)
-            .then(department => department)
-            .catch((e) => { 
-                res.status(401).json({ success: false, msg: 'Failed to get minor' })
-            })
+        const getMinor = await Department.getDepartmentByName(minor);
 
-        let newStudent = await new Student({
-            user: user,
-            name: name,
-            address: address,
-            phone: phone,
-            major: getMajor,
-            minor: getMinor,
-            isManager: false
-        })
-
-        let student = await Student.addStudent(newStudent)
-            .then((student) => student)
-            .catch((err) => {
-                res.status(401).json({ success: false, msg: 'Failed to register student' })
-            })
-
-        await Department.insertStudentByName(student, getMajor.name)
-            .catch((e) => { 
-                res.status(401).json({ success: false, msg: 'Failed to insert major' })
-            })
+        const student = await Student.addStudent(user, name, address, phone, getMajor, getMinor);
+        
+        await Department.insertStudentByName(student, getMajor.name);
         if(getMinor) {
-            await Department.insertStudentByName(student, getMinor.name)
-            .catch((e) => { 
-                res.status(401).json({ success: false, msg: 'Failed to insert minor' })
-            })
+            await Department.insertStudentByName(student, getMinor.name);
         }
         
-        await res.status(200).json({ success: true, msg: 'Student registered' })
+        await res.status(200).json({ success: true, msg: 'Student registered' });
     }
     catch(e) {
-        res.status(401).json({ success: false, msg: 'Failed to register student' })
+        console.log(e)
+        res.status(401).json({ success: false, msg: 'Failed to register student' });
     }
-})
+});
 
-module.exports = router
+module.exports = router;

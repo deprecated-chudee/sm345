@@ -1,23 +1,29 @@
 const mongoose = require('mongoose');
 
+const { Schema } = mongoose;
+
 const User = require('./user');
 const Department = require('./department');
 
-const EmployeeSchema = new mongoose.Schema({
+const Employee = new Schema({
     user: { type:mongoose.Schema.Types.ObjectId, ref: 'User' },
     id: String,
     name: String,
     phone: String,
     department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: false },
-    isManager: Boolean
+    isManager: { type: Boolean, default: false }
 });
 
-const Employee = module.exports = mongoose.model('employee', EmployeeSchema);
+Employee.statics.addEmployee = function(user, name, phone, department) {
+    const employee = new this({
+        user: user,
+        name: name,
+        phone: phone,
+        department: department,
+        isManager: false
+    });
 
-module.exports.addEmployee = async (newEmployee) => {
-    try {
-        return await newEmployee.save()
-    } catch(e) {
-        throw Error(e)
-    }
+    return employee.save();
 }
+
+module.exports = mongoose.model('Employee', Employee);

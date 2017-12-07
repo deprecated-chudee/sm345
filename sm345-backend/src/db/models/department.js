@@ -1,71 +1,53 @@
 const mongoose = require('mongoose');
 
+const { Schema } = mongoose;
+
 const Employee = require('./employee');
 const Professor = require('./professor');
 const Student = require('./student');
 
-const DepartmentSchema = new mongoose.Schema({
+const Department = new Schema({
     name: String,
     number: Number,
     phone: String,
     employees: [{ 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Employee',
+        type: Schema.Types.ObjectId, ref: 'Employee',
         required: false
     }],
     professors: [{ 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Professor',
+        type: Schema.Types.ObjectId, ref: 'Professor',
         required: false
     }],
     students: [{ 
-        type: mongoose.Schema.Types.ObjectId, ref: 'Student',
+        type: Schema.Types.ObjectId, ref: 'Student',
         required: false 
     }]
 });
 
-const Department = module.exports = mongoose.model('department', DepartmentSchema);
-
-module.exports.addDepartment = async (newDepartment) => {
-    try {
-        let saveDepartment = newDepartment.save()
-        return saveDepartment
-    }
-    catch(e) {
-        throw Error(e)
-    }
+Department.statics.addDepartment = function(name, number, phone) {
+    const department = new this({
+        name: name,
+        number: number,
+        phone: phone
+    });
+    
+    return department.save();
 }
 
-module.exports.getDepartmentByName = async (name) => {
-    try {
-        return Department.findOne({name: name})
-    }
-    catch(e) {
-        throw Error(e)
-    }
+Department.statics.getDepartmentByName = function(name) {
+    return this.findOne({name: name}).exec();
 }
 
-module.exports.insertStudentByName = async (student, name) => {
-    try {
-        return Department.update({name: name}, {$push: {students: student}}, { upsert: true })
-    }
-    catch(e) {
-        throw Error(e)
-    }
+Department.statics.insertStudentByName = function(student, name) {
+    return this.update({name: name}, {$push: {students: student}}, {upsert: true}).exec();
 }
 
-module.exports.insertProfessorByName = async (professor, name) => {
-    try {
-        return Department.update({name: name}, {$push: {professors: professor}}, { upsert: true })
-    }
-    catch(e) {
-        throw Error(e)
-    }
+Department.statics.insertProfessorByName = function(professor, name) {
+    return this.update({name: name}, {$push: {professors: professor}}, { upsert: true }).exec();
 }
 
-module.exports.insertEmployeeByName = async (employee, name) => {
-    try {
-        return Department.update({name: name}, {$push: {employees: employee}}, { upsert: true })
-    }
-    catch(e) {
-        throw Error(e)
-    }
+Department.statics.insertEmployeeByName = function(employee, name) {
+    return this.update({name: name}, {$push: {employees: employee}}, { upsert: true }).exec();
 }
+
+module.exports = mongoose.model('Department', Department);
