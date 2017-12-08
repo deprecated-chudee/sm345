@@ -12,8 +12,7 @@ const Professor = new Schema({
     number: Number,
     phone: String,
     tel: String,
-    department: { type: Schema.Types.ObjectId, ref: 'Department' },
-    isManager: { type: Boolean, default: false }
+    department: { type: Schema.Types.ObjectId, ref: 'Department' }
 });
 
 
@@ -24,8 +23,7 @@ Professor.statics.addProfessor = function(user, name, number, phone, tel, depart
         number: number,
         phone: phone,
         tel: tel,
-        department: department,
-        isManager: false
+        department: department
     });
 
     return professor.save();

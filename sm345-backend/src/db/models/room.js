@@ -39,36 +39,8 @@ Room.statics.addRoom = function (
     return room.save();
 }
 
-// module.exports.addFile = async (newFile, type, author) => {
-//     try {
-//         require('dotenv').config();
-//         const { MONGO_URI: mongoURI } = process.env;
-//         const Grid = require('gridfs-stream');
-//         Grid.mongo = mongoose.mongo;
-//         let conn = mongoose.createConnection(mongoURI);
-//         let file
-
-//         await conn.once('open', () => {
-//             let gfs = Grid(conn.db);
-//             let writestream = gfs.createWriteStream({
-//                 filename: newFile.name,
-//                 mode: 'w',
-//                 content_type: newFile.mimetype,
-//                 aliases: type,
-//                 author: author
-//             });
-        
-//             writestream.on('close', file => this.file = file);
-//             console.log(file)
-//             writestream.write(data)
-//             writestream.end()
-//         })
-
-//         return await file;
-//     }
-//     catch(e) {
-//         throw Error(e)
-//     }
-// }
+Room.statics.getList = function() {
+    return this.find({}).exec();
+}
 
 module.exports = mongoose.model('Room', Room);

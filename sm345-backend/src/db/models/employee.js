@@ -10,8 +10,7 @@ const Employee = new Schema({
     id: String,
     name: String,
     phone: String,
-    department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: false },
-    isManager: { type: Boolean, default: false }
+    department: { type:mongoose.Schema.Types.ObjectId, ref: 'Department', required: false }
 });
 
 Employee.statics.addEmployee = function(user, name, phone, department) {
@@ -19,8 +18,7 @@ Employee.statics.addEmployee = function(user, name, phone, department) {
         user: user,
         name: name,
         phone: phone,
-        department: department,
-        isManager: false
+        department: department
     });
 
     return employee.save();
