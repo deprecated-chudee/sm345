@@ -8,7 +8,7 @@ export default class RoomModel {
       return this.todos.filter(todo => !todo.finished).length;
     }
   
-    @action
+    // @action
     // addTodo(title) {
     //   this.todos.push(new TodoModel(title));
     // }
