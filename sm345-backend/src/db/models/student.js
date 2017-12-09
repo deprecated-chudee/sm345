@@ -37,33 +37,33 @@ Student.statics.getStudentByName = function(name) {
     return this.findOne({name: name}).exec();
 }
 
-Student.statics.applyMentor = async function(mentorName) {
-    const mentor = await this.getStudentByName(mentorName);
+Student.statics.applyMentor = async function(id) {
+    const mentor = await this.getStudentById(id);
     return User.update({_id: mentor.user, auth: 0}, {$set: {auth: 2}}).exec();
 }
 
-Student.statics.withdrawMentor = async function(mentorName) {
-    const mentor = await this.getStudentByName(mentorName);
+Student.statics.withdrawMentor = function(id) {
+    const mentor = this.getStudentById(id);
     return User.update({_id: mentor.user, auth: 2}, {$set: {auth: 0}}).exec();
 }
 
-Student.statics.applyMentee = async function(menteeName) {
-    const mentee = await this.getStudentByName(menteeName);
+Student.statics.applyMentee = function(id) {
+    const mentee = this.getStudentById(id);
     return User.update({_id: mentee.user, auth: 0}, {$set: {auth: 1}}).exec();
 }
 
-Student.statics.withdrawMentee = async function(menteeName) {
-    const mentee = await this.getStudentByName(menteeName);
+Student.statics.withdrawMentee = function(id) {
+    const mentee = this.getStudentById(id);
     return User.update({_id: mentee.user, auth: 1}, {$set: {auth: 0}}).exec();
 }
 
-Student.statics.applyAdmin = async function(name) {
-    const student = await this.getStudentByName(name);
+Student.statics.applyAdmin = function(id) {
+    const student = this.getStudentById(id);
     return User.update({_id: student.user}, {$set: {auth: 5}}).exec();
 }
 
-Student.statics.withdrawAdmin = async function(name) {
-    const student = await this.getStudentByName(name);
+Student.statics.withdrawAdmin = async function(id) {
+    const student = await this.getStudentById(id);
     return User.update({_id: student.user, auth: 5}, {$set: {auth: 0}}).exec();
 }
 

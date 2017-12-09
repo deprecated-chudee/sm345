@@ -43,4 +43,8 @@ Room.statics.getList = function() {
     return this.find({}).exec();
 }
 
+Room.statics.getFileById = function(id) {
+    return fs.files.findOne({_id: id}).exec();
+}
+
 module.exports = mongoose.model('Room', Room);
