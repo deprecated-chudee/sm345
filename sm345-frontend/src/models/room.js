@@ -1,15 +1,15 @@
-// import { observable, computed, action } from "mobx";
+import { observable, computed, action } from "mobx";
 
-// export default class RoomModel {
-//     @observable todos = [];
+export default class RoomModel {
+    @observable todos = [];
   
-//     @computed
-//     get unfinishedTodoCount() {
-//       return this.todos.filter(todo => !todo.finished).length;
-//     }
+    @computed
+    get unfinishedTodoCount() {
+      return this.todos.filter(todo => !todo.finished).length;
+    }
   
-//     @action
-//     addTodo(title) {
-//       this.todos.push(new TodoModel(title));
-//     }
-//   }
+    @action
+    // addTodo(title) {
+    //   this.todos.push(new TodoModel(title));
+    // }
+}
