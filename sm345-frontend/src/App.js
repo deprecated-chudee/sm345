@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import {  } from 'mobx';
-// import { Home } from 'routes';
-// import Header from 'components/Header';
-// import DrawerMenu from 'components/DrawerMenu';
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { Provider } from 'mobx-react';
+import stores from './stores';
+
+import { Home, Room } from './pages';
+import { Header, DrawerMenu, RoomList } from './components';
+
+const theme = createMuiTheme();
 
 const App = () => {
-  return (
-    <MuiThemeProvider>
-        <Router>
-          <div>
-            {/* <Header/> */}
-            {/* <DrawerMenu/> */}
-            {/* <Route path="/" component={Home} /> */}
-          </div>
-        </Router>
-    </MuiThemeProvider>
-  )
+	return (
+		<MuiThemeProvider theme={theme}>
+			<Provider {...stores} >
+				<Router>
+				<div>
+					<Header/>
+					<DrawerMenu/>
+					<Route path="/" exact component={Home} />
+					<Route path="/room" component={Room} />
+				</div>
+				</Router>
+			</Provider>
+		</MuiThemeProvider>
+	)
 }
 
 export default App
