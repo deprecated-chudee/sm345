@@ -1,13 +1,13 @@
 import RoomListStore from './RoomListStore';
 import ViewStateStore from './ViewStateStore';
+import ExcelStore from './ExcelStore';
 
 const roomListStore = window.roomListStore = new RoomListStore();
 const viewStateStore = window.viewStateStore = new ViewStateStore();
-// export { default as RootModel } from './RootModel';
-// export { default as RoomListModel } from './RoomListModel';
-// export { default as RoomModel } from './RoomModel';
+const excelStore = window.excelStore = new ExcelStore();
 
 export default {
     roomListStore,
-    viewStateStore
+    viewStateStore,
+    excelStore
 }

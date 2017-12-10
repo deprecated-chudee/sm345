@@ -259,4 +259,11 @@ module.exports = {
   performance: {
     hints: false,
   },
+  // use xlsx library webpack externals
+  externals: [
+		{
+			'./cptable': 'var cptable',
+			'../xlsx.js': 'var _XLSX'
+		}
+	]
 };

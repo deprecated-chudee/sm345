@@ -1,9 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { AppBar, Toolbar, Typography } from 'material-ui';
-import Dialog, { DialogTitle, DialogContent } from 'material-ui/Dialog';
-// import AppBar from 'material-ui/AppBar';
+import Dialog from 'material-ui/Dialog';
 import Slide from 'material-ui/transitions/Slide';
 import Paper from 'material-ui/Paper';
 import { MenuList, MenuItem } from 'material-ui/Menu';
@@ -42,35 +40,41 @@ function Transition(props) {
 const DrawerMenu = inject('viewStateStore')(observer(
     ({viewStateStore}) => {
         return (
-            // <div>
-                <Dialog
-                    open={viewStateStore.dialog}
-                    transition={Transition}
-                    keepMounted
-                    onRequestClose={viewStateStore.toggleDialog}
-                >
-                    <Paper style={styles.drawerPaper}>
-                        <MenuList>
-                            <Link to={'/'} style={styles.link}>
-                                <MenuItem>
-                                    <ListItemIcon> 
-                                        <Info /> 
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="홈" />
-                                </MenuItem>
-                            </Link>
-                            <Link to={'/room'} style={styles.link}>
-                                <MenuItem>
-                                    <ListItemIcon> 
-                                        <GroupWork /> 
-                                    </ListItemIcon>
-                                    <ListItemText inset primary="멘토방" />
-                                </MenuItem>
-                            </Link>
-                        </MenuList>
-                    </Paper>
-                </Dialog>
-            // </div>
+            <Dialog
+                open={viewStateStore.dialog}
+                transition={Transition}
+                keepMounted
+                onRequestClose={viewStateStore.toggleDialog}
+            >
+                <Paper style={styles.drawerPaper}>
+                    <MenuList>
+                        <Link to={'/'} style={styles.link}>
+                            <MenuItem>
+                                <ListItemIcon> 
+                                    <Info /> 
+                                </ListItemIcon>
+                                <ListItemText inset primary="홈" />
+                            </MenuItem>
+                        </Link>
+                        <Link to={'/room'} style={styles.link}>
+                            <MenuItem>
+                                <ListItemIcon> 
+                                    <GroupWork /> 
+                                </ListItemIcon>
+                                <ListItemText inset primary="멘토방" />
+                            </MenuItem>
+                        </Link>
+                        <Link to={'/excel'} style={styles.link}>
+                            <MenuItem>
+                                <ListItemIcon> 
+                                    <GroupWork /> 
+                                </ListItemIcon>
+                                <ListItemText inset primary="엑셀" />
+                            </MenuItem>
+                        </Link>
+                    </MenuList>
+                </Paper>
+            </Dialog>
         );
     })
 );

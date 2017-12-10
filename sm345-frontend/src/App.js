@@ -4,7 +4,7 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { Provider } from 'mobx-react';
 import stores from './stores';
 
-import { Home, Room } from './pages';
+import { Home, Room, Excel } from './pages';
 import { Header, DrawerMenu, RoomList } from './components';
 
 const theme = createMuiTheme();
@@ -19,6 +19,7 @@ const App = () => {
 					<DrawerMenu/>
 					<Route path="/" exact component={Home} />
 					<Route path="/room" component={Room} />
+					<Route path="/excel" component={Excel} />
 				</div>
 				</Router>
 			</Provider>
