@@ -11,7 +11,7 @@ export default class RoomListStore {
 	}
 
 	@action
-	getRoomList() {
+	getRoomList = () => {
 		axios.get('http://localhost:4000/api/room/list')
 			.then(res => this.rooms = res.data.data)
 			.catch(e => {
@@ -20,7 +20,7 @@ export default class RoomListStore {
 	}
 
     @action
-    addRoom(info) {
+    addRoom = info => {
       this.rooms.push(new RoomStore(info));
     }
 }
