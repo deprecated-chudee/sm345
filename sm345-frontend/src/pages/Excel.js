@@ -17,39 +17,50 @@ export default class Excel extends Component {
                 let workbook = XLSX.read(data, {type: 'binary'});
                 let first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
                 let jsonData = XLSX.utils.sheet_to_json(first_worksheet, {header:1});
-                console.log(jsonData)
-                // this.setState({json: jsonData});
+                jsonData.shift()
                 this.props.excelStore.addJson(jsonData)
             }
             reader.readAsBinaryString(file);
         }
     }  
 
+    handleClick = () => {
+        this.props.excelStore.enterExcel()
+    }
+
     render() {
-        const { json } = this.props.excelStore;
+        const { json, success, msg, loading } = this.props.excelStore;
 
         const View = ({data}) => {
             return (
                 <ul>
-                    {data.map(e => {
-                        return <li> {e} </li>
+                    {data.map((e, i) => {
+                        return <li key={i}> {e} </li>
                     })}
                 </ul>
             )
         };
 
         return (
-            <div>
+            <div className="page">
                 <h1>Excel~</h1>
                 <input 
                     type="file" 
                     name="excel"
                     onChange={this.handleChange}
-                    value=""
                 />
                 <div> 
                     {json ? <View data={json} /> : ''}
                 </div>
+
+                <button onClick={this.handleClick}>
+                    click
+                </button>
+
+                {success}
+                {msg}
+                {loading}
+                 {/* ? msg : msg} */}
             </div>
         )
     }

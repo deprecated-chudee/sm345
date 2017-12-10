@@ -6,17 +6,22 @@ const User = require('../../db/models/user');
 
 router.post('/', async (req, res, next) => {
     try {
+        // 기말 예제 엑셀 순서
+        // 0:학과, 1:학번, 2:이름, 3:번호, 4:이메일
         const studentArray = await req.body;
         for(let e of studentArray) {
-            await console.log(e)
-            const user = await User.addUser(e[0], '0000', 0);
-            const getMajor = await Department.getDepartmentByName(e[4]);
-            const getMinor = await Department.getDepartmentByName(e[5]);
-            const student = await Student.addStudent(user, e[1], e[2], e[3], getMajor, getMinor);
+            const user = await User.addUser(e[1], '0000', 0); // 비밀번호 0000 초기화
+            
+            const getMajor = await Department.getDepartmentByName(e[0]);
+            // const getMinor = await Department.getDepartmentByName();
+
+            // 유저, 이름, 이메일, 번호, (주소), 학과, 부학과(null)
+            const student = await Student.addStudent(user, e[2], e[4], e[3], getMajor, null);
+
             await Department.insertStudentByName(student, getMajor.name);
-            if(getMinor) {
-                await Department.insertStudentByName(student, getMinor.name);
-            }
+            // if(getMinor) {
+            //     await Department.insertStudentByName(student, getMinor.name);
+            // }
         }
         await res.status(200).json({ success: true, msg: 'Student Excel registered' });
     }

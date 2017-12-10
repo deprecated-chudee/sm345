@@ -9,19 +9,21 @@ const Survey = require('./survey');
 const Student = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
-    address: { type: String, required: true },
+    // address: { type: String, required: true },
     phone: { type: String, required: true },
+    email: { type: String, required: true },
     major: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
     minor: { type: Schema.Types.ObjectId, ref: 'Department', required: false },
     surveys: [{ type: Schema.Types.ObjectId, ref: 'Survey', required: false }]
 });
 
-Student.statics.addStudent = function(user, name, address, phone, major, minor) {
+Student.statics.addStudent = function(user, name, email, phone, major, minor) {
     const student = new this({
         user: user,
         name: name,
-        address: address,
+        // address: address,
         phone: phone,
+        email: email,
         major: major,
         minor: minor
     })
