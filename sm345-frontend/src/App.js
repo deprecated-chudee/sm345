@@ -5,7 +5,7 @@ import { Provider } from 'mobx-react';
 import stores from './stores';
 
 import { Home, Room, Excel } from './pages';
-import { Header, DrawerMenu } from './components';
+import { Header, DrawerMenu, CreateRoom } from './components';
 
 const theme = createMuiTheme();
 
@@ -18,8 +18,9 @@ const App = () => {
 					<Header/>
 					<DrawerMenu/>
 					<Route path="/" exact component={Home} />
-					<Route path="/room" component={Room} />
+					<Route path="/room" exact component={Room} />
 					<Route path="/excel" component={Excel} />
+					<Route path="/room/create" component={CreateRoom} />
 				</div>
 				</Router>
 			</Provider>

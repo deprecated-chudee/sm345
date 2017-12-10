@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import { GridList, GridListTile } from 'material-ui/GridList';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
@@ -9,10 +10,9 @@ const base64_encode = (data) => {
    return `data:image/jpeg;base64,${new Buffer(data).toString('base64')}`;
 }
 
-const RoomList = inject('roomListStore')(observer(
-    ({roomListStore}) => (
-        <div style={styles.root}>
-        <h2> RoomList </h2>
+const RoomList = inject('roomListStore')(observer(({roomListStore}) => (
+    <div style={styles.root}>
+        <h1> RoomList </h1>
         <GridList cellHeight={500} style={styles.gridList} cols={3}>
             {roomListStore.rooms.map(room => {
                 return (
@@ -44,9 +44,11 @@ const RoomList = inject('roomListStore')(observer(
                 )
             })}
         </GridList>
-      </div>
-    )
-));
+        <Link to="room/create">
+            <Button style={styles.button} raised color="primary"> Create Room </Button>
+        </Link>
+    </div>
+)));
 
 export default RoomList;
 
@@ -67,4 +69,11 @@ const styles = {
     media: {
         height: 200,
     },
+    button: {
+        display: 'block',
+        width: '300px',
+        height: '50px',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+    }
 }
