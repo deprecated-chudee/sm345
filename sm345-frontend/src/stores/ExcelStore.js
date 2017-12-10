@@ -1,4 +1,4 @@
-import { observable, computed, action, autorun } from "mobx";
+import { observable, action } from "mobx";
 // import axios from 'axios';
 
 export default class ExcelStore {

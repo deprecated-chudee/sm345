@@ -5,7 +5,7 @@ import { Provider } from 'mobx-react';
 import stores from './stores';
 
 import { Home, Room, Excel } from './pages';
-import { Header, DrawerMenu, RoomList } from './components';
+import { Header, DrawerMenu } from './components';
 
 const theme = createMuiTheme();
 

@@ -1,4 +1,4 @@
-import { observable, computed, action, autorun } from "mobx";
+import { observable, action, autorun } from "mobx";
 import axios from 'axios';
 
 import RoomStore from './RoomStore';
