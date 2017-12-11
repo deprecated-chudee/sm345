@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 
 @inject('roomStore')
 @observer
-export default class CreateRoom extends Component {
+export default class Create extends Component {
     updateRoom = (key, value) => {
         this.props.roomStore.Room[key] = value;
     }
@@ -57,9 +57,8 @@ export default class CreateRoom extends Component {
         const { Room } = this.props.roomStore;
 
         return (
-            <div className="page">
+            <div>
                 <h1> CreateRoom~ </h1>
-
                 <Card>
                     <CardMedia
                         id="preview"
@@ -177,7 +176,6 @@ export default class CreateRoom extends Component {
                         </form>
                     </CardContent>
                 </Card>
-
                 <Button 
                     style={styles.button} 
                     raised 

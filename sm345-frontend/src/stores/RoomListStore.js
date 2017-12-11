@@ -5,6 +5,7 @@ import RoomStore from './RoomStore';
 
 export default class RoomListStore {
 	@observable rooms = [];
+	@observable selectedRoom;
 
 	constructor() {
 		autorun(() => this.getRoomList())

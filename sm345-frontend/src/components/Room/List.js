@@ -10,20 +10,20 @@ const base64_encode = (data) => {
    return `data:image/jpeg;base64,${new Buffer(data).toString('base64')}`;
 }
 
-const RoomList = inject('roomListStore')(observer(({roomListStore}) => (
+const List = inject('roomListStore')(observer(({roomListStore}) => (
     <div style={styles.root}>
         <h1> RoomList </h1>
-        <GridList cellHeight={500} style={styles.gridList} cols={3}>
+        <GridList cellHeight={600} style={styles.gridList} cols={2}>
             {roomListStore.rooms.map(room => {
                 return (
                     <GridListTile key={room._id} cols={1}>
                         <Card style={styles.card}>
                             <CardMedia
                                 style={{
-                                    height: 200,
+                                    height: 350,
                                     backgroundImage: `url(${base64_encode(room.thumbnail.data)})`
                                 }}
-                                image={`url(${base64_encode(room.thumbnail.data)})`}
+                                image='http://headfm.net/wp-content/uploads/2014/11/no-image-1-600x6004-600x500.png'
                                 title={room.teamname}
                             />
                             <CardContent>
@@ -35,22 +35,22 @@ const RoomList = inject('roomListStore')(observer(({roomListStore}) => (
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button dense color="primary">
-                                    Learn More
-                                </Button>
+                                <Link to={`/room/info/${room._id}`} style={styles.link}>
+                                    <Button dense color="primary">Learn More</Button>
+                                </Link>
                             </CardActions>
                         </Card>
                     </GridListTile>
                 )
             })}
         </GridList>
-        <Link to="room/create">
+        <Link to="/room/create">
             <Button style={styles.button} raised color="primary"> Create Room </Button>
         </Link>
     </div>
 )));
 
-export default RoomList;
+export default List;
 
 const styles = {
     root: {
@@ -64,10 +64,10 @@ const styles = {
         height: '100%',
     },
     card: {
-        maxWidth: 345,
+        maxWidth: 800,
     },
     media: {
-        height: 200,
+        height: 600,
     },
     button: {
         display: 'block',
@@ -75,5 +75,8 @@ const styles = {
         height: '50px',
         marginLeft: 'auto',
         marginRight: 'auto'
+    },
+    link: {
+        textDecoration: 'none'
     }
 }

@@ -56,6 +56,14 @@ const DrawerMenu = inject('viewStateStore')(observer(
                                 <ListItemText inset primary="홈" />
                             </MenuItem>
                         </Link>
+                        <Link to={'/login'} style={styles.link}>
+                            <MenuItem>
+                                <ListItemIcon> 
+                                    <Info /> 
+                                </ListItemIcon>
+                                <ListItemText inset primary="로그인" />
+                            </MenuItem>
+                        </Link>
                         <Link to={'/room'} style={styles.link}>
                             <MenuItem>
                                 <ListItemIcon> 

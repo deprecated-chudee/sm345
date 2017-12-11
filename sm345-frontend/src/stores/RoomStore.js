@@ -4,6 +4,7 @@ import axios from 'axios';
 
 export default class RoomStore {
     @observable Room = {
+        _id: '',
         mentorName: '',
         teamname: '',
         subject: '',
@@ -42,6 +43,5 @@ export default class RoomStore {
         }).catch(e => {
             console.log(e)
         })
-        // axios.post('http://localhost:4000/api/room/create', formData)
     }
 }
