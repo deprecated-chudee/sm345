@@ -34,6 +34,10 @@ Department.statics.addDepartment = function(name, number, phone) {
     return department.save();
 }
 
+Department.statics.getDepartmentById = function(id) {
+    return this.findById(id).exec();
+}
+
 Department.statics.getDepartmentByName = function(name) {
     return this.findOne({name: name}).exec();
 }

@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
             // const getMinor = await Department.getDepartmentByName();
 
             // 유저, 이름, 이메일, 번호, (주소), 학과, 부학과(null)
-            const student = await Student.addStudent(user, e[2], e[4], e[3], getMajor, null);
+            const student = await Student.addStudent(user, e[2], e[3], e[4], getMajor, null);
 
             await Department.insertStudentByName(student, getMajor.name);
             // if(getMinor) {

@@ -2,8 +2,9 @@ const router = require('express').Router();
 
 const Room = require('../../db/models/room');
 const fileRead = require('../../lib/fileRead');
+const Student = require('../../db/models/student');
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
     try {
         let data = await Room.getList();
 
@@ -11,6 +12,7 @@ router.get('/', async (req, res, next) => {
         for(let e of data) {
             newData.push({
                 ...e._doc,
+                mentor: await Student.getStudentById(e.mentor),
                 thumbnail: await fileRead(e.thumbnail),
                 credentialFile: await fileRead(e.credentialFile)
             })
@@ -22,7 +24,7 @@ router.get('/', async (req, res, next) => {
         })
     }
     catch(e) {
-        res.status(400).json({ success: false, msg: 'Failed get room list' })
+        res.status(403).json({ success: false, msg: 'Failed get room list' })
     }
 });
 

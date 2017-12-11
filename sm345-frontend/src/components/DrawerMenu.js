@@ -37,6 +37,11 @@ function Transition(props) {
     return <Slide direction="right" style={styles.transition} in="true" {...props}/>
 }
 
+function logout(props) {
+    localStorage.clear();
+    window.location.href="/"
+}
+
 const DrawerMenu = inject('viewStateStore')(observer(
     ({viewStateStore}) => {
         return (
@@ -62,6 +67,14 @@ const DrawerMenu = inject('viewStateStore')(observer(
                                     <Info /> 
                                 </ListItemIcon>
                                 <ListItemText inset primary="로그인" />
+                            </MenuItem>
+                        </Link>
+                        <Link to={'/logout'} style={styles.link} onClick={logout}>
+                            <MenuItem>
+                                <ListItemIcon> 
+                                    <Info /> 
+                                </ListItemIcon>
+                                <ListItemText inset primary="로그아웃" />
                             </MenuItem>
                         </Link>
                         <Link to={'/room'} style={styles.link}>

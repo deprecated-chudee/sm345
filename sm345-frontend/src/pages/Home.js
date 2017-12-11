@@ -1,13 +1,17 @@
-import React from 'react';
-// import Header from 'components/Header';
+import React, { Component } from 'react';
 
-const Home = () => {
-    return (
-        <div className="page">
-            <h1>Home~</h1>
-        </div>
-    );
-};
+export default class Home extends Component {
+    render() {
+        let user = localStorage.getItem('user');
 
-
-export default Home;
+        return (
+            <div className="page">
+                <h1>Home~</h1>
+                {user ? 
+                    <h2> Hello {JSON.parse(user).user.username} </h2> : 
+                    undefined
+                }
+            </div>
+        )
+    }
+}

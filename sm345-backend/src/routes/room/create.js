@@ -8,10 +8,10 @@ const upload = require('../../lib/upload');
 // Add Room
 router.post('/', async (req, res, next) => {
     try {
-        const { mentorName, teamname, subject, description, link, year, semester } = req.body;
+        const { user_id, teamname, subject, description, link, year, semester } = req.body;
         const { thumbnail, credentialFile } = req.files;
     
-        const mentor = await Student.getStudentByName(mentorName);
+        const mentor = await Student.getStudentByUserId(user_id);
         
         const thumbnailSchema = await upload(thumbnail, 'thumbnail').then(res => res);
         const credentialFileSchema = await upload(credentialFile, 'credentialFile').then(res => res);

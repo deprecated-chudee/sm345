@@ -24,8 +24,13 @@ export default class Create extends Component {
     }
 
     onChangeImage = e => {
-        this.updateRoomFile(e.target.name, e.target.files[0]);
-        this.preview();
+        if(e.target.files[0].size > 999999) {
+            alert('1MB 이하 크기의 이미지를 업로드 해주세요.');
+            this.updateRoomFile(e.target.name, '');
+        } else {
+            this.updateRoomFile(e.target.name, e.target.files[0]);
+            this.preview();
+        }
     }
 
     preview = () => {
@@ -95,7 +100,7 @@ export default class Create extends Component {
                                 </Button>
                                 {Room.credentialFile ? <span style={{marginLeft: '20px'}}>{Room.credentialFile.name}</span> : ''}
                             </div>
-                            <TextField
+                            {/* <TextField
                                 required
                                 id="mentorName"
                                 style={styles.textFull}
@@ -104,7 +109,7 @@ export default class Create extends Component {
                                 value={Room.mentorName}
                                 onChange={this.onChange}
                                 margin="normal"
-                            />
+                            /> */}
                             <TextField
                                 required
                                 id="teamname"

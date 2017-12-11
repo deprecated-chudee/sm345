@@ -3,41 +3,36 @@ const bcrypt = require('bcryptjs');
 
 const { Schema } = mongoose;
 
-function hash(password) {
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash(password, salt, function(err, hash) {
-            return hash
-        })
-    })
-};
-
 const User = new Schema({
-    username: String,
-    password: String,
-    auth: Number
+    username: {type: String, required: true },
+    password: {type: String, required: true },
+    auth: {type: Number, required: true },
 });
 
-User.statics.addUser = function(username, password, auth) {
-    const user = new this({
-        username: username,
-        password: hash(password),
-        auth: auth
+User.statics.addUser = async function(username, password, auth) {
+    let hash = await bcrypt.genSalt(10).then(salt => {
+        return bcrypt.hash(password, salt).then(hash => hash)
     });
 
+    const user = await new this({
+        username: username,
+        password: hash,
+        auth: auth
+    });
     return user.save();
 }
 
-User.methods.getUserById = function(id) {
+User.statics.getUserById = function(id) {
     return this.findById(id).exec();
 }
 
-User.methods.getUserByUsername = function(username) {
-    return User.findOne({username: username}).exec();
+User.statics.getUserByUsername = function(username) {
+    return this.findOne({username: username}).exec();
 }
 
-module.exports.comparePassword = async (candidatePassword, hash) => {
+User.statics.comparePassword = async (candidatePassword, hash) => {
     try {
-        return bcrypt.compare(candidatePassword, hash)
+        return await bcrypt.compare(candidatePassword, hash)
             .then((isMatch) => (null, isMatch))
     } catch(e) {
         throw Error(e)

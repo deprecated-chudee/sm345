@@ -4,8 +4,8 @@ const Student = require('../../db/models/student');
 
 router.post('/apply', (req, res, next) => {
     try {
-        let { name } = req.body;
-        Student.applyMentor(name)
+        let { id } = req.body;
+        Student.applyMentor(id)
         res.status(200).json({ success: true, msg: 'Success apply mentor' })
     }
     catch(e) {
@@ -16,8 +16,8 @@ router.post('/apply', (req, res, next) => {
 
 router.post('/withdraw', (req, res, next) => {
     try {
-        let { name } = req.body;
-        Student.withdrawMentor(name)
+        let { id } = req.body;
+        Student.withdrawMentor(id)
         res.status(200).json({ success: true, msg: 'Success withdraw mentor' })
     }
     catch(e) {

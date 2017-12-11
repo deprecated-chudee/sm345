@@ -35,7 +35,9 @@ export default class Excel extends Component {
             return (
                 <ul>
                     {data.map((e, i) => {
-                        return <li key={i}> {e} </li>
+                        return ( 
+                            <li key={i}> {e} </li> 
+                        )
                     })}
                 </ul>
             )

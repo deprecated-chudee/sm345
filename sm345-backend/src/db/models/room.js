@@ -20,11 +20,11 @@ const Room = new Schema({
 }, { strict: false })
 
 Room.statics.addRoom = function (
-    montor, teamname, subject, description, link, 
+    mentor, teamname, subject, description, link, 
     year, semester, thumbnail, credentialFile
 ) {
     const room = new this({
-        montor: montor, 
+        mentor: mentor, 
         teamname: teamname, 
         subject: subject, 
         description: description, 

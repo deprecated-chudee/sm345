@@ -5,8 +5,8 @@ import axios from 'axios';
 export default class RoomStore {
     @observable Room = {
         _id: '',
-        mentorName: '',
-        teamname: '',
+        mentor: '',
+        user: '',
         subject: '',
         description: '',
         link: '',
@@ -19,7 +19,7 @@ export default class RoomStore {
     @action
     createRoom = () => {
         let formData = new FormData();
-        formData.append('mentorName', this.Room.mentorName);
+        formData.append('user_id', JSON.parse(localStorage.getItem('user')).user.id);
         formData.append('teamname', this.Room.teamname);
         formData.append('subject', this.Room.subject);
         formData.append('description', this.Room.description);
@@ -33,7 +33,8 @@ export default class RoomStore {
         axios({
             method: 'post',
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'x-access-token': localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token.split(' ')[1] : ''
             },
             baseURL: 'http://localhost:4000/api/room/create',
             data: formData,

@@ -13,11 +13,17 @@ export default class RoomListStore {
 
 	@action
 	getRoomList = () => {
-		axios.get('http://localhost:4000/api/room/list')
-			.then(res => this.rooms = res.data.data)
-			.catch(e => {
-				console.log(e)
-			})
+		axios({
+			method: 'get',
+			headers: {
+				'x-access-token': localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token.split(' ')[1] : ''
+			},
+			url: 'http://localhost:4000/api/room/list'
+		})
+		.then(res => this.rooms = res.data.data)
+		.catch(e => {
+			// console.log(e)
+		})
 	}
 
     @action

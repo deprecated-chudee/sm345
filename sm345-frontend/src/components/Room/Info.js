@@ -42,7 +42,7 @@ export default class Info extends Component {
 
                         <div style={styles.textFull}>
                             <Typography type="title" style={styles.title}> 멘토: </Typography>
-                            <Typography type="subheading" style={styles.subheader}> {room.mentorName} </Typography>
+                            <Typography type="subheading" style={styles.subheader}> {room.mentor.name} </Typography>
                         </div>
 
                         <div style={styles.textFull}>

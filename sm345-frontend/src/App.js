@@ -4,8 +4,8 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { Provider } from 'mobx-react';
 import stores from './stores';
 
-import { Home, Room, Excel, Login } from './pages';
-import { Header, DrawerMenu } from './components';
+import { Home, Room, Excel, Login, Student } from './pages';
+import { Header, DrawerMenu, PrivateRoute } from './components';
 
 const theme = createMuiTheme();
 
@@ -19,10 +19,9 @@ const App = () => {
 						<DrawerMenu/>
 						<Route exact path="/" component={Home} />
 						<Route path="/login" component={Login} />
-						<Route path="/room" component={Room} />
 						<Route path="/excel" component={Excel} />
-						{/* <Route path="/room/create" component={CreateRoom} />
-						<Route path="/room/:id" componrnt={} /> */}
+						<PrivateRoute path="/room" component={Room} />
+						<PrivateRoute path="/student" component={Student} />
 					</div>
 				</Router>
 			</Provider>

@@ -11,12 +11,8 @@ const User = require('../../db/models/user');
 router.post('/', async (req, res, next) => {
     let { username, password } = req.body;
     
-    let user = await User.getUserByUsername(username)
-        .then(user => user)
-        .catch((e) => {
-            res.status(400).json({ success: false, msg: 'User not found' })
-        })
-        
+    let user = await User.getUserByUsername(username);
+
     await User.comparePassword(password, user.password)
         .then((isMatch) => {
             const token = jwt.sign(user.toJSON(), secret, {
@@ -34,8 +30,9 @@ router.post('/', async (req, res, next) => {
             })
         })
         .catch((err) => {
-            res.status(400).json({ success: false, msg: 'Wrong password' })
+            res.status(403).json({ success: false, msg: 'Wrong password' })
         })
-})
+});
+
 
 module.exports = router;

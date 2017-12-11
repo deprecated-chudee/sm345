@@ -11,7 +11,6 @@ const busboyBodyParser = require('busboy-body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const passport = require('passport');
-// const multer = require('multer');
 
 const api = require('./routes');
 
@@ -26,11 +25,9 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(busboyBodyParser());
-app.use(passport.initialize())
-app.use(passport.session())
-require('./config/passport')(passport)
-// app.use('/uploads', express.static(__dirname + '/uploads'));
-// app.use(multer({dest:'./uploads/'}).single('file'));
+app.use(passport.initialize());
+app.use(passport.session());
+require('./config/passport')(passport);
 
 app.get('/', function(req, res) {
     res.send('express')

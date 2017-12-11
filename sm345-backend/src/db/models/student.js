@@ -6,7 +6,7 @@ const User = require('./user');
 const Department = require('./department');
 const Survey = require('./survey');
 
-const Student = new Schema({
+const Student = new Schema ({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     // address: { type: String, required: true },
@@ -31,6 +31,10 @@ Student.statics.addStudent = function(user, name, email, phone, major, minor) {
     return student.save()
 }
 
+Student.statics.getStudentList = function() {
+    return this.find({}).exec();
+}
+
 Student.statics.getStudentById = function(id) {
     return this.findById(id).exec();
 }
@@ -39,28 +43,32 @@ Student.statics.getStudentByName = function(name) {
     return this.findOne({name: name}).exec();
 }
 
+Student.statics.getStudentByUserId = function(userId) {
+    return this.findOne({user: userId}).exec();
+}
+
 Student.statics.applyMentor = async function(id) {
     const mentor = await this.getStudentById(id);
     return User.update({_id: mentor.user, auth: 0}, {$set: {auth: 2}}).exec();
 }
 
-Student.statics.withdrawMentor = function(id) {
-    const mentor = this.getStudentById(id);
+Student.statics.withdrawMentor = async function(id) {
+    const mentor = await this.getStudentById(id);
     return User.update({_id: mentor.user, auth: 2}, {$set: {auth: 0}}).exec();
 }
 
-Student.statics.applyMentee = function(id) {
-    const mentee = this.getStudentById(id);
+Student.statics.applyMentee = async function(id) {
+    const mentee = await this.getStudentById(id);
     return User.update({_id: mentee.user, auth: 0}, {$set: {auth: 1}}).exec();
 }
 
-Student.statics.withdrawMentee = function(id) {
-    const mentee = this.getStudentById(id);
+Student.statics.withdrawMentee = async function(id) {
+    const mentee = await this.getStudentById(id);
     return User.update({_id: mentee.user, auth: 1}, {$set: {auth: 0}}).exec();
 }
 
-Student.statics.applyAdmin = function(id) {
-    const student = this.getStudentById(id);
+Student.statics.applyAdmin = async function(id) {
+    const student = await this.getStudentById(id);
     return User.update({_id: student.user}, {$set: {auth: 5}}).exec();
 }
 
