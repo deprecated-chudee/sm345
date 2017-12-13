@@ -11,6 +11,7 @@ const Room = new Schema({
     subject: String,
     description: String,
     link: String,
+    max: Number,
     year: Number,
     semester: Number,
     reports: [{ type: Schema.Types.ObjectId, ref: 'fs.files', required: false }],
@@ -21,7 +22,7 @@ const Room = new Schema({
 
 Room.statics.addRoom = function (
     mentor, teamname, subject, description, link, 
-    year, semester, thumbnail, credentialFile
+    year, semester, thumbnail, credentialFile, max
 ) {
     const room = new this({
         mentor: mentor, 
@@ -33,7 +34,8 @@ Room.statics.addRoom = function (
         semester: semester, 
         thumbnail: thumbnail, 
         credentialFile: credentialFile,
-        isConfirm: false
+        isConfirm: false,
+        max: max
     });
 
     return room.save();
@@ -46,5 +48,13 @@ Room.statics.getList = function() {
 Room.statics.getFileById = function(id) {
     return fs.files.findOne({_id: id}).exec();
 }
+
+Room.statics.addMentee = function(roomId, student) {
+    return this.update({_id: roomId}, {$push: {mentee: student}}, {upsert: true}).exec();
+}
+
+// Room.statics.menteeListByRoomId = function(roomId, mentee) {
+//     return this.find({_id: roomId})
+// }
 
 module.exports = mongoose.model('Room', Room);

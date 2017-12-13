@@ -144,6 +144,16 @@ export default class Create extends Component {
                                 margin="normal"
                             />
                             <TextField
+                                required
+                                id="max"
+                                style={styles.textFull}
+                                name="max"
+                                label="최대 인원"
+                                value={Room.max}
+                                onChange={this.onChange}
+                                margin="normal"
+                            />
+                            <TextField
                                 id="link"
                                 style={styles.textFull}
                                 name="link"

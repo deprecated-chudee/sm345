@@ -13,7 +13,9 @@ export default class RoomStore {
         year: 2017,
         semester: 2,
         thumbnail: null,
-        credentialFile: null
+        credentialFile: null,
+        max: 0,
+        mentee: []
     };
 
     @action
@@ -28,6 +30,7 @@ export default class RoomStore {
         formData.append('semester', this.Room.semester);
         formData.append('thumbnail', this.Room.thumbnail, this.Room.thumbnail.name);
         formData.append('credentialFile', this.Room.credentialFile, this.Room.credentialFile.name);
+        formData.append('max', this.Room.max);
 
         console.log(this.formData)
         axios({

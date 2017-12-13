@@ -8,7 +8,7 @@ const upload = require('../../lib/upload');
 // Add Room
 router.post('/', async (req, res, next) => {
     try {
-        const { user_id, teamname, subject, description, link, year, semester } = req.body;
+        const { user_id, teamname, subject, description, link, year, semester, max } = req.body;
         const { thumbnail, credentialFile } = req.files;
     
         const mentor = await Student.getStudentByUserId(user_id);
@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
         
         const room = await Room.addRoom(
             mentor, teamname, subject, description, link,  
-            year, semester, thumbnailSchema, credentialFileSchema
+            year, semester, thumbnailSchema, credentialFileSchema, max
         );
 
         await res.status(200).json({ success: true, msg: 'Room created' });

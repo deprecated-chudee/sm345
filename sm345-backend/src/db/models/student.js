@@ -10,6 +10,8 @@ const Student = new Schema ({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     // address: { type: String, required: true },
+    year: { type: Number, required: true },
+    gender: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String, required: true },
     major: { type: Schema.Types.ObjectId, ref: 'Department', required: true },
@@ -17,11 +19,12 @@ const Student = new Schema ({
     surveys: [{ type: Schema.Types.ObjectId, ref: 'Survey', required: false }]
 });
 
-Student.statics.addStudent = function(user, name, email, phone, major, minor) {
+Student.statics.addStudent = function(user, major, name, gender, year, phone, email, minor) {
     const student = new this({
         user: user,
         name: name,
-        // address: address,
+        gender: gender,
+        year: year,
         phone: phone,
         email: email,
         major: major,
@@ -58,7 +61,7 @@ Student.statics.withdrawMentor = async function(id) {
 }
 
 Student.statics.applyMentee = async function(id) {
-    const mentee = await this.getStudentById(id);
+    const mentee = await this.getStudentByUserId(id);
     return User.update({_id: mentee.user, auth: 0}, {$set: {auth: 1}}).exec();
 }
 

@@ -18,6 +18,15 @@ export default class Info extends Component {
         return `data:image/jpeg;base64,${new Buffer(data).toString('base64')}`;
     }
 
+    applyMentee = () => {
+        this.props.roomListStore.applyMentee(this.state.room._id)
+    }
+
+    getMentee = (e) => {
+        this.props.roomListStore.getMentee(e.target.value)
+        console.log(this.props.roomListStore.mentee[e.target.value])
+    }
+
     render() {
         let { room } = this.state;
 
@@ -74,14 +83,24 @@ export default class Info extends Component {
 
                     </CardContent>
                 </Card>
-                <Button 
-                    style={styles.button} 
-                    raised 
-                    color="primary"
-                    onClick={this.submit}
-                > 
-                    멘티 신청
-                </Button>
+                
+                { room.mentor.user === JSON.parse(localStorage.getItem('user')).user.id ? 
+                    <ul>
+                        <h3>멘티목록</h3>
+                        {room.mentee.map(e => {
+                            return <li onClick={this.getMentee}> {e} </li>
+                        })}
+                    </ul>
+                    :
+                    <Button 
+                        style={styles.button} 
+                        raised 
+                        color="primary"
+                        onClick={this.applyMentee}
+                    > 
+                        멘티 신청
+                    </Button>
+                }
             </div>
         )
     }
